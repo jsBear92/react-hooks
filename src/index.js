@@ -1,15 +1,22 @@
 import React, { useState } from 'react';
 import ReactDOM from 'react-dom/client';
 import './index.css';
+import { FaStar } from "react-icons/fa"
+
+const createArray = (length) => [
+  ...Array(length)
+]
+
+function Star({ selected = false }) {
+  return (<FaStar color={selected ? "red" : "gray"} />);
+}
+
+function StarRating({ totalStarts = 5 }) {
+  return createArray(totalStarts).map((n, i) => (<Star key={i} />));
+}
 
 function App() {
-  const [checked, setChecked] = useState(false);
-  return (
-    <div>
-      <input type='checkbox' value={checked} onChange={() => setChecked(!checked)}/>
-      <p>{checked ? "checked" :"not checked"}</p>
-    </div>
-  );
+  return <StarRating />;
 }
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
