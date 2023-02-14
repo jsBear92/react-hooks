@@ -4,14 +4,22 @@ import './index.css';
 
 function App() {
   const [name, setName] = useState("James");
+  const [admin, setAdmin] = useState(false);
 
   useEffect(() => {
-    document.title = `Celebrate ${name}`;
-  });
+    console.log(`Celebrate ${name}`);
+  }, [name]);
+
+  useEffect(() => {
+    console.log(`The use is: ${admin ? "admin" : "not admin"}.`);
+  }, [admin]);
+
   return (
     <section>
       <p>Congratulations {name}!</p>
       <button onClick={() => setName("Will")}>Change Winner</button>
+      <p>{admin ? "logged in" : "not logged in"}</p>
+      <button onClick={() => setAdmin(true)}>Log In</button>
     </section>
   )
 }
