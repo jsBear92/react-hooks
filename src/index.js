@@ -3,25 +3,28 @@ import ReactDOM from 'react-dom/client';
 import './index.css';
 
 function App() {
-  const [name, setName] = useState("James");
-  const [admin, setAdmin] = useState(false);
+  const [data, setData] = useState([]);
 
   useEffect(() => {
-    console.log(`Celebrate ${name}`);
-  }, [name]);
+    fetch(`https://api.github.com/users`)
+    .then((response) => response.json())
+    .then(setData);
+  }, []);
 
-  useEffect(() => {
-    console.log(`The use is: ${admin ? "admin" : "not admin"}.`);
-  }, [admin]);
+  if (data) {
+    return (
+      <div>
+        <ul>
+          {data.map((user) => (
+            <li key={user.id}>{user.login}</li>
+          ))}
+        </ul>
+        <button onClick={() => setData([])}>Remove Data</button>
+      </div>
+    )
+  }
 
-  return (
-    <section>
-      <p>Congratulations {name}!</p>
-      <button onClick={() => setName("Will")}>Change Winner</button>
-      <p>{admin ? "logged in" : "not logged in"}</p>
-      <button onClick={() => setAdmin(true)}>Log In</button>
-    </section>
-  )
+  return <p>No Users</p>;
 }
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
